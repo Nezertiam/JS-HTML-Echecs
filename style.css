@@ -1,0 +1,55 @@
+*{
+    box-sizing: border-box;
+}
+
+#wrapper{
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#plateau{
+    display: flex;
+    flex-wrap: wrap;
+}
+.caseEchec{
+    background-color: white;
+    width: 12.5%;
+    color: black;
+    position: relative;
+}
+.caseEchec:nth-of-type(2n){
+    background-color: black;
+    width: 12.5%;
+    color: white;
+    position: relative;
+}
+.caseEchec:after{
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+    position: relative;
+}
+.caseEchec p{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    text-align: center;
+    text-transform: uppercase;
+    transform: translate(-50%, -50%);
+}
+
+.rowEchec{
+    display: flex;
+    width: 100%;
+}
+.rowEchec:nth-of-type(2n){
+    justify-content:flex-end;
+    flex-direction: row-reverse;
+}
+
+.echiquier{
+    display: block;
+    width: 100%;
+    border: 1px solid black;
+}

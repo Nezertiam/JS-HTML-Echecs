@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <title>Echecs</title>
+    </head>
+
+
+    <body>
+        <section id="wrapper">
+            <form id="form">
+                <input type="submit" id="generate" value="Générer échiquier">
+            </form>
+            <div id="plateau">
+
+            </div>
+            <script>
+
+                // EVENTS -------------------------------------------
+                    // bouton submit
+                let btn = document.querySelector("#form")    
+                btn.addEventListener("submit", (event) => {
+                    event.preventDefault()
+                    console.log(document.querySelector("#plateau").appendChild(createEchiquier(8)))
+                    let rows = document.querySelector(".echiquier").childNodes
+                    let tabPieces = ["tour", "cavalier", "fou", "reine", "roi", "fou", "cavalier", "tour", "pion", "pion", "pion", "pion", "pion", "pion", "pion", "pion"]
+                    console.log(rows)
+                    for(let i = 0; i < 8; i++){
+                        if(i <= 1){   // pour éviter de boucler pour rien sur les rows en milieu de plateau
+                            // Pièces du joueur noir
+                            let cases = rows[i].childNodes
+                            for(let j = 0; j < 8 ; j++){
+                                let noir
+                                let x = (i == 1) ? j+8 : j
+                                if(tabPieces[x] == "tour" || tabPieces[x] == "reine"){      // Condition pour déterminer si l'on doit dire NOIR ou NOIRE pour la pièce
+                                    noir = " noire"                                         // en index j+n dans tabPieces
+                                } else{
+                                    noir = " noir"
+                                }
+                                cases[j].innerHTML = "<p>" + tabPieces[x] + noir + "</p>"
+                            }
+                        }
+                        if(i >= 6){
+                            let cases = rows[i].childNodes
+                            let k = 0
+                            for(let j = 7; j >= 0 ; j--){
+                                let blanc
+                                let x = (i == 6) ? j+8 : j
+                                if(tabPieces[x] == "tour" || tabPieces[x] == "reine"){      // Condition pour déterminer si l'on doit dire BLANC ou BLANCHE pour la pièce
+                                    blanc = " blanche"                                      // en index j+n dans tabPieces
+                                } else{
+                                    blanc = " blanc"
+                                }
+                                cases[k].innerHTML = "<p>" + tabPieces[x] + blanc + "</p>"
+                                k++
+                            }
+                        }
+                    }
+                })
+                // --------------------------------------------------
+
+                // FONCTIONS ----------------------------------------
+                function createCase(){
+                    let caseEchec = document.createElement("div")
+                    caseEchec.classList.add("caseEchec")
+                    return caseEchec
+                }
+                function createRow(nb){     // Permet de créer une ligne avec nb cases
+                    let rowEchec = document.createElement("div")
+                    rowEchec.classList.add("rowEchec")
+                    for(let i = 1; i <= nb; i++) {
+                        rowEchec.appendChild(createCase())
+                    }
+                    return rowEchec
+                }
+                function createEchiquier(nb){
+                    let echiquier = document.createElement("div")
+                    echiquier.classList.add("echiquier")
+                    for(let i = 1; i <= nb; i++) {
+                        echiquier.appendChild(createRow(nb))
+                    }
+                    return echiquier
+                }
+                // --------------------------------------------------
+            </script>
+        </section>
+    </body>
+</html>
