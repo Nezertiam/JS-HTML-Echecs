@@ -11,6 +11,9 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+/* ---- ECHECS --------------------------------------------- */
+
 .caseEchec{
     background-color: white;
     width: 12.5%;
@@ -18,7 +21,7 @@
     position: relative;
 }
 .caseEchec:nth-of-type(2n){
-    background-color: black;
+    background-color: rgb(104, 104, 104);
     width: 12.5%;
     color: white;
     position: relative;
@@ -29,27 +32,57 @@
     padding-bottom: 100%;
     position: relative;
 }
-.caseEchec p{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: 0;
-    text-align: center;
-    text-transform: uppercase;
-    transform: translate(-50%, -50%);
-}
 
-.rowEchec{
+.rowPlateau{
     display: flex;
     width: 100%;
 }
-.rowEchec:nth-of-type(2n){
+.rowPlateau:nth-of-type(2n){
     justify-content:flex-end;
     flex-direction: row-reverse;
 }
+/* -------------------------------------------------------- */
 
-.echiquier{
+
+/* ---- COMMUN -------------------------------------------- */
+.echiquier, .damier{
     display: block;
     width: 100%;
-    border: 1px solid black;
+    border: 3px solid black;
+    margin: 1em 0;
 }
+img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+    
+}
+
+/* -------------------------------------------------------- */
+
+
+/* ---- DAMES --------------------------------------------- */
+.caseDames{
+    background-color: white;
+    width: 10%;
+    color: black;
+    position: relative;
+}
+.caseDames:nth-of-type(2n){
+    background-color: rgb(104, 104, 104);
+    width: 10%;
+    color: white;
+    position: relative;
+}
+.caseDames:after{
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+    position: relative;
+}
+
+/* -------------------------------------------------------- */

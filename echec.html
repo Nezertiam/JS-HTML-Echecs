@@ -12,51 +12,69 @@
 
     <body>
         <section id="wrapper">
-            <form id="form">
-                <input type="submit" id="generate" value="Générer échiquier">
+            <form id="formEchecs">
+                <input type="submit" id="generateEchiquier" value="Générer échiquier">
+            </form>
+            <form id="formDames">
+                <input type="submit" id="generateDames" value="Générer damier">
             </form>
             <div id="plateau">
-
             </div>
             <script>
 
                 // EVENTS -------------------------------------------
-                    // bouton submit
-                let btn = document.querySelector("#form")    
-                btn.addEventListener("submit", (event) => {
+                    // bouton submit ECHECS
+                let nbEchecs = 0;
+                let nbDames = 0;
+                document.querySelector("#formEchecs").addEventListener("submit", (event) => {
                     event.preventDefault()
-                    console.log(document.querySelector("#plateau").appendChild(createEchiquier(8)))
-                    let rows = document.querySelector(".echiquier").childNodes
+                    nbEchecs += 1
+                    console.log(document.querySelector("#plateau").appendChild(createPlateau(8)))
+                    let rows = document.querySelector("#echiquier" + nbEchecs).childNodes
                     let tabPieces = ["tour", "cavalier", "fou", "reine", "roi", "fou", "cavalier", "tour", "pion", "pion", "pion", "pion", "pion", "pion", "pion", "pion"]
-                    console.log(rows)
                     for(let i = 0; i < 8; i++){
                         if(i <= 1){   // pour éviter de boucler pour rien sur les rows en milieu de plateau
                             // Pièces du joueur noir
                             let cases = rows[i].childNodes
                             for(let j = 0; j < 8 ; j++){
-                                let noir
                                 let x = (i == 1) ? j+8 : j
-                                if(tabPieces[x] == "tour" || tabPieces[x] == "reine"){      // Condition pour déterminer si l'on doit dire NOIR ou NOIRE pour la pièce
-                                    noir = " noire"                                         // en index j+n dans tabPieces
-                                } else{
-                                    noir = " noir"
-                                }
-                                cases[j].innerHTML = "<p>" + tabPieces[x] + noir + "</p>"
+                                cases[j].innerHTML = "<img src='img/noirs/" + tabPieces[x] + ".png'>"
                             }
                         }
                         if(i >= 6){
+                            // Pièces du joueur blanc
                             let cases = rows[i].childNodes
                             let k = 0
                             for(let j = 7; j >= 0 ; j--){
-                                let blanc
                                 let x = (i == 6) ? j+8 : j
-                                if(tabPieces[x] == "tour" || tabPieces[x] == "reine"){      // Condition pour déterminer si l'on doit dire BLANC ou BLANCHE pour la pièce
-                                    blanc = " blanche"                                      // en index j+n dans tabPieces
-                                } else{
-                                    blanc = " blanc"
-                                }
-                                cases[k].innerHTML = "<p>" + tabPieces[x] + blanc + "</p>"
+                                cases[k].innerHTML = "<img src='img/blancs/" + tabPieces[x] + ".png'>"
                                 k++
+                            }
+                        }
+                    }
+                })
+
+                    // bouton submit DAMES 
+                document.querySelector("#formDames").addEventListener("submit", (event) => {
+                    event.preventDefault()
+                    nbDames += 1
+                    console.log(document.querySelector("#plateau").appendChild(createPlateau(10)))
+                    let rows = document.querySelector("#damier" + nbDames).childNodes
+                    for(let i = 0; i < 10; i++){
+                        if(i <= 3){
+                            let cases = rows[i].childNodes
+                            for(let j = 0; j < 10; j++){
+                                if(j % 2 === 1){
+                                    cases[j].innerHTML = "<img src='img/noirs/pion.png'>"
+                                }
+                            }
+                        }
+                        if (i >= 6){
+                            let cases = rows[i].childNodes
+                            for(let j = 0; j < 10; j++){
+                                if(j % 2 === 1){
+                                    cases[j].innerHTML = "<img src='img/blancs/pion.png'>"
+                                }
                             }
                         }
                     }
@@ -64,26 +82,52 @@
                 // --------------------------------------------------
 
                 // FONCTIONS ----------------------------------------
-                function createCase(){
-                    let caseEchec = document.createElement("div")
-                    caseEchec.classList.add("caseEchec")
-                    return caseEchec
+                function createCase(nb){
+
+                    let casePlateau = document.createElement("div")
+
+                    if(nb === 8){
+                        casePlateau.classList.add("caseEchec")
+                        return casePlateau
+                    }
+                    else if(nb === 10){
+                        casePlateau.classList.add("caseDames")
+                        return casePlateau
+                    }
+
                 }
+
                 function createRow(nb){     // Permet de créer une ligne avec nb cases
-                    let rowEchec = document.createElement("div")
-                    rowEchec.classList.add("rowEchec")
+
+                    let rowPlateau = document.createElement("div")
+
+                    rowPlateau.classList.add("rowPlateau")
                     for(let i = 1; i <= nb; i++) {
-                        rowEchec.appendChild(createCase())
+                        rowPlateau.appendChild(createCase(nb))
                     }
-                    return rowEchec
+                    return rowPlateau
                 }
-                function createEchiquier(nb){
-                    let echiquier = document.createElement("div")
-                    echiquier.classList.add("echiquier")
-                    for(let i = 1; i <= nb; i++) {
-                        echiquier.appendChild(createRow(nb))
+
+                function createPlateau(nb){
+
+                    let plateau = document.createElement("div")
+
+                    if(nb === 8){
+                        plateau.classList.add("echiquier")
+                        plateau.id = "echiquier" + nbEchecs
+                        for(let i = 1; i <= nb; i++) {
+                            plateau.appendChild(createRow(nb))
+                        }
+                        return plateau
                     }
-                    return echiquier
+                    else if(nb === 10){
+                        plateau.classList.add("damier")
+                        plateau.id = "damier" + nbDames
+                        for(let i = 1; i <= nb; i++) {
+                            plateau.appendChild(createRow(nb))
+                        }
+                        return plateau
+                    }
                 }
                 // --------------------------------------------------
             </script>
